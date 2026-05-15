@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ce qui t'attend — Reconnect à Toi-Même</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --rose:#e8a4a4; --rose-deep:#c97a7a; --rose-pale:#f7e8e8;
+  --rose-blush:#fdf0f0; --beige:#f5ede3; --beige-mid:#e8d5c0;
+  --cream:#fdfaf7; --text:#3a2a2a; --text-soft:#7a5c5c;
+  --white:#ffffff; --noir:#1c1c1c;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* ══ HERO ══ */
+.hero{
+  background:var(--noir); min-height:52vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px 52px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(232,164,164,.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-ring{position:absolute;border-radius:50%;border:1px solid rgba(232,164,164,.1)}
+.hero-ring:nth-child(1){width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.hero-ring:nth-child(2){width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(232,164,164,.06)}
+/* Bande tricolore top */
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rose-deep) 0%,var(--rose) 50%,var(--beige-mid) 100%)}
+
+.back-link{
+  position:absolute;top:22px;left:22px;
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,.4);
+  text-decoration:none;transition:color .2s;z-index:2;
+}
+.back-link:hover{color:var(--rose)}
+.back-link::before{content:'←';font-size:14px}
+
+.hero-tag{
+  display:inline-block;font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--rose);border:1px solid rgba(232,164,164,.3);border-radius:20px;
+  padding:5px 18px;margin-bottom:20px;position:relative;z-index:1;
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,8vw,68px);font-weight:300;line-height:1;
+  color:var(--white);position:relative;z-index:1;
+}
+.hero h1 em{font-style:italic;color:var(--rose);display:block;font-size:.85em}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(14px,2.5vw,17px);color:rgba(255,255,255,.45);
+  margin-top:14px;line-height:1.65;max-width:480px;position:relative;z-index:1;
+}
+.hero-note{
+  margin-top:22px;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(232,164,164,.1);border:1px solid rgba(232,164,164,.2);
+  border-radius:40px;padding:8px 20px;
+  font-size:11px;color:rgba(255,255,255,.5);position:relative;z-index:1;
+}
+.hero-note strong{color:var(--rose);font-weight:500}
+
+/* ══ INTRO ══ */
+.intro{
+  text-align:center;padding:52px 24px 32px;max-width:600px;margin:0 auto;
+}
+.intro h2{
+  font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,28px);
+  font-weight:700;color:var(--rose-deep);margin-bottom:10px;
+}
+.intro p{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:16px;color:var(--text-soft);line-height:1.75;
+}
+
+/* ══ CATÉGORIES NAV ══ */
+.cat-nav{
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  padding:0 20px 36px;
+}
+.cat-btn{
+  background:var(--white);border:1.5px solid var(--rose-pale);border-radius:40px;
+  padding:8px 20px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;
+  color:var(--text-soft);cursor:pointer;transition:all .2s;
+}
+.cat-btn:hover,.cat-btn.active{
+  background:var(--rose-deep);border-color:var(--rose-deep);color:var(--white);
+}
+
+/* ══ SECTION CATÉGORIE ══ */
+.cat-section{max-width:900px;margin:0 auto;padding:0 20px 56px}
+.cat-section.hidden{display:none}
+
+.cat-section-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:28px;
+  padding-bottom:16px;border-bottom:1px solid var(--rose-pale);
+}
+.cat-emoji{font-size:28px}
+.cat-section-title{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);
+}
+.cat-section-sub{font-size:12px;color:var(--text-soft);margin-top:2px}
+
+/* ══ GRILLE LOOKBOOK ══ */
+.lookbook-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:20px;
+}
+
+/* ══ CARTE LOOKBOOK ══ */
+.look-card{
+  border-radius:20px;overflow:hidden;
+  background:var(--white);border:1.5px solid var(--rose-pale);
+  cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.look-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 50px rgba(201,122,122,.13);
+  border-color:var(--rose);
+}
+
+/* Zone photo — GRANDE et belle */
+.look-photo{
+  width:100%;aspect-ratio:4/3;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--rose-pale) 0%,var(--beige) 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.look-photo img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .4s ease;
+}
+.look-card:hover .look-photo img{transform:scale(1.06)}
+
+/* Placeholder élégant */
+.look-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  position:relative;
+}
+.look-placeholder .ph-emoji{font-size:52px;opacity:.6;transition:transform .3s}
+.look-card:hover .ph-emoji{transform:scale(1.1)}
+.look-placeholder .ph-top{
+  position:absolute;top:14px;left:14px;right:14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.look-placeholder .ph-tag{
+  font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--rose-deep);background:rgba(255,255,255,.8);
+  border-radius:20px;padding:3px 10px;backdrop-filter:blur(4px);
+}
+.look-placeholder .ph-add{
+  font-size:9px;color:var(--text-soft);opacity:.6;
+  background:rgba(255,255,255,.7);border-radius:20px;padding:3px 10px;
+}
+
+/* Infos carte */
+.look-info{padding:16px 18px 18px}
+.look-name{
+  font-family:'Playfair Display',serif;font-size:16px;font-weight:700;
+  color:var(--text);margin-bottom:4px;line-height:1.2;
+}
+.look-tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;color:var(--text-soft);line-height:1.45;margin-bottom:12px;
+}
+.look-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:10px;border-top:1px solid var(--rose-pale);
+}
+.look-price{
+  font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--rose-deep);
+}
+.look-detail{
+  font-size:10px;font-weight:500;color:var(--rose);
+  display:flex;align-items:center;gap:4px;
+}
+.look-detail::after{content:'→';font-size:12px}
+
+/* ══ MODAL ══ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(30,18,18,.5);
+  backdrop-filter:blur(8px);z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  padding:16px;opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+
+.modal{
+  background:var(--white);border-radius:24px;
+  max-width:480px;width:100%;max-height:90vh;overflow-y:auto;
+  transform:translateY(28px) scale(.97);transition:transform .3s;
+  box-shadow:0 40px 90px rgba(30,18,18,.2);
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+
+/* Photo modal */
+.modal-photo{
+  width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--rose-pale),var(--beige));
+  display:flex;align-items:center;justify-content:center;
+  border-radius:24px 24px 0 0;
+}
+.modal-photo img{width:100%;height:100%;object-fit:cover}
+.modal-photo .modal-ph{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.modal-photo .modal-ph span:first-child{font-size:64px;opacity:.5}
+.modal-photo .modal-ph span:last-child{font-size:11px;color:var(--text-soft);opacity:.6;letter-spacing:.1em;text-transform:uppercase}
+
+.modal-close{
+  position:absolute;top:14px;right:14px;width:34px;height:34px;
+  background:rgba(255,255,255,.92);border:none;border-radius:50%;cursor:pointer;
+  font-size:16px;color:var(--text-soft);display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);transition:background .2s,color .2s;
+}
+.modal-close:hover{background:var(--white);color:var(--rose-deep)}
+
+/* Corps modal */
+.modal-body{padding:24px 26px 28px}
+.modal-badge{
+  display:inline-block;font-size:9px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--rose-deep);
+  background:var(--rose-pale);border-radius:20px;padding:4px 12px;margin-bottom:12px;
+}
+.modal-name{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+  color:var(--text);margin-bottom:6px;line-height:1.15;
+}
+.modal-tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:14px;color:var(--text-soft);margin-bottom:16px;line-height:1.5;
+}
+.modal-sep{height:1px;background:linear-gradient(to right,transparent,var(--rose-pale),transparent);margin:16px 0}
+.modal-desc{font-size:13px;color:var(--text-soft);line-height:1.78;margin-bottom:16px}
+
+.modal-benefits-title{
+  font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rose-deep);margin-bottom:10px;
+}
+.modal-benefits{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.modal-benefits li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;color:var(--text-soft);line-height:1.5;
+}
+.modal-benefits li::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--rose);flex-shrink:0;margin-top:7px;
+}
+
+.modal-price-block{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(135deg,var(--rose-pale),var(--beige));
+  border-radius:12px;padding:14px 18px;
+}
+.modal-price-label{font-size:10px;color:var(--text-soft);text-transform:uppercase;letter-spacing:.08em}
+.modal-price-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--rose-deep)}
+
+/* ══ FOOTER ══ */
+.page-footer{
+  background:var(--noir);text-align:center;padding:36px 20px;
+}
+.page-footer p{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:15px;color:rgba(255,255,255,.4);line-height:1.8;
+}
+.page-footer p strong{color:var(--rose);font-style:normal}
+.footer-link{
+  display:inline-block;margin-top:16px;
+  background:linear-gradient(135deg,var(--rose-deep),#d98a8a);
+  color:var(--white);border-radius:40px;padding:11px 28px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  text-decoration:none;letter-spacing:.04em;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 20px rgba(201,122,122,.3);
+}
+.footer-link:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,122,122,.4)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeUp .5s ease both}
+
+@media(max-width:500px){
+  .lookbook-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .look-info{padding:12px 14px 14px}
+  .look-name{font-size:14px}
+  .look-tagline{font-size:12px}
+  .modal-body{padding:18px 18px 22px}
+}
+@media(max-width:340px){
+  .lookbook-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <a class="back-link" href="reconnect-inscription.html">Retour à l'inscription</a>
+  <div class="hero-tag">Disponible le jour J · 19 Décembre 2026</div>
+  <h1>Ce qui t'attend<em>sur place ♡</em></h1>
+  <p class="hero-sub">Prépare ton budget et viens l'esprit léger — tout sera là pour toi.</p>
+  <div class="hero-note">
+    <span>💡 Les prix sont <strong>indicatifs</strong> — aucun achat en ligne</span>
+  </div>
+</div>
+
+<!-- ══ INTRO ══ -->
+<div class="intro">
+  <h2>La journée, c'est aussi ça ♡</h2>
+  <p>En plus des activités bien-être, tu trouveras sur place une sélection de produits et saveurs
+  pour chouchouter ton corps, faire plaisir à tes enfants, et repartir avec de beaux souvenirs.
+  Tout est pensé pour être accessible à toutes les bourses.</p>
+</div>
+
+<!-- ══ NAV CATÉGORIES ══ -->
+<div class="cat-nav">
+  <button class="cat-btn active" onclick="showCat('all',this)">Tout voir</button>
+  <button class="cat-btn" onclick="showCat('boissons',this)">🍹 Boissons</button>
+  <button class="cat-btn" onclick="showCat('food',this)">🥗 Food</button>
+  <button class="cat-btn" onclick="showCat('beaute',this)">✨ Beauté</button>
+  <button class="cat-btn" onclick="showCat('lifestyle',this)">🎁 Goodies</button>
+</div>
+
+<!-- ══ SECTIONS ══ -->
+<div id="sections-container">
+
+  <!-- BOISSONS -->
+  <div class="cat-section" data-cat="boissons">
+    <div class="cat-section-header">
+      <span class="cat-emoji">🍹</span>
+      <div>
+        <div class="cat-section-title">Boissons bien-être</div>
+        <div class="cat-section-sub">Hydratation, énergie et douceur — sans culpabilité</div>
+      </div>
+    </div>
+    <div class="lookbook-grid" id="grid-boissons"></div>
+  </div>
+
+  <!-- FOOD -->
+  <div class="cat-section" data-cat="food">
+    <div class="cat-section-header">
+      <span class="cat-emoji">🥗</span>
+      <div>
+        <div class="cat-section-title">Food & Snacks</div>
+        <div class="cat-section-sub">Se faire plaisir, c'est aussi prendre soin de soi</div>
+      </div>
+    </div>
+    <div class="lookbook-grid" id="grid-food"></div>
+  </div>
+
+  <!-- BEAUTÉ -->
+  <div class="cat-section" data-cat="beaute">
+    <div class="cat-section-header">
+      <span class="cat-emoji">✨</span>
+      <div>
+        <div class="cat-section-title">Beauté & Soins</div>
+        <div class="cat-section-sub">Pour briller de l'intérieur comme de l'extérieur</div>
+      </div>
+    </div>
+    <div class="lookbook-grid" id="grid-beaute"></div>
+  </div>
+
+  <!-- GOODIES -->
+  <div class="cat-section" data-cat="lifestyle">
+    <div class="cat-section-header">
+      <span class="cat-emoji">🎁</span>
+      <div>
+        <div class="cat-section-title">Goodies & Lifestyle</div>
+        <div class="cat-section-sub">Emporte un souvenir de cette journée unique</div>
+      </div>
+    </div>
+    <div class="lookbook-grid" id="grid-lifestyle"></div>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<div class="page-footer">
+  <p>
+    Tout est disponible sur place le <strong>19 Décembre 2026</strong>.<br/>
+    Aucun achat en ligne — viens simplement prête à te faire du bien ♡
+  </p>
+  <a class="footer-link" href="reconnect-inscription.html">← Réserver ma place</a>
+</div>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-photo" id="modalPhoto"></div>
+    <div class="modal-body">
+      <span class="modal-badge" id="modalBadge"></span>
+      <h2 class="modal-name" id="modalName"></h2>
+      <p class="modal-tagline" id="modalTagline"></p>
+      <div class="modal-sep"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <p class="modal-benefits-title">Bienfaits &amp; infos</p>
+      <ul class="modal-benefits" id="modalBenefits"></ul>
+      <div class="modal-price-block">
+        <span class="modal-price-label">Prix indicatif sur place</span>
+        <span class="modal-price-val" id="modalPrice"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DONNÉES — Pour ajouter une photo remplace photo:null
+// par photo:'URL_OU_CHEMIN_DE_TA_PHOTO.jpg'
+// ══════════════════════════════════════════════════════
+const items = {
+  boissons: [
+    {
+      emoji:'🥒', nom:'Jus Détox Vert',
+      tagline:'Le shot de vitalité qui remet les pendules à l\'heure.',
+      desc:'Un jus frais préparé sur place avec concombre, épinards, citron et gingembre. Idéal avant une séance de yoga pour booster ton énergie naturellement.',
+      bienfaits:['Détoxifie le foie et élimine les toxines','Booste l\'énergie sans sucre ajouté','Favorise la digestion','Riche en vitamines C, K et antioxydants'],
+      prix:'1 500 FCFA', photo:null,
+    },
+    {
+      emoji:'🍵', nom:'Matcha Latte',
+      tagline:'La douceur japonaise qui apaise le mental.',
+      desc:'Un matcha latte onctueux au lait végétal et miel naturel. Chaud ou froid selon ta préférence — énergie douce garantie.',
+      bienfaits:['L-théanine pour le calme et la concentration','Antioxydant puissant','Énergie douce sans pic de caféine','Bénéfique pour la peau de l\'intérieur'],
+      prix:'2 000 FCFA', photo:null,
+    },
+    {
+      emoji:'💧', nom:'Eau Infusée',
+      tagline:'Hydratation élégante, zéro culpabilité.',
+      desc:'Eau fraîche infusée rose, framboises, menthe et citron. Sans sucre ni conservateur — fraîche et délicieuse toute la journée.',
+      bienfaits:['Hydratation optimale et naturelle','Zéro sucre, zéro calorie','Favorise la clarté de la peau','Aide à maintenir le rythme d\'hydratation'],
+      prix:'1 000 FCFA', photo:null,
+    },
+  ],
+  food: [
+    {
+      emoji:'🥞', nom:'Crêpes Bien-Être',
+      tagline:'Le plaisir sans se priver — ça existe vraiment.',
+      desc:'Crêpes légères à la farine complète, garnies de fruits frais de saison et d\'un filet de miel naturel. Préparées sur place, chaudes et dorées.',
+      bienfaits:['Farine complète = index glycémique bas','Fruits frais pour les vitamines et fibres','Miel naturel antibactérien et énergisant','Sans conservateurs ni additifs'],
+      prix:'1 500 FCFA', photo:null,
+    },
+    {
+      emoji:'🥗', nom:'Minibardises Détox',
+      tagline:'Grignoter sans trahir tes bonnes résolutions.',
+      desc:'Bouchées de crudités croquantes, sauce houmous maison et mélange de graines. Le snacking version bien-être — idéal après le pilates.',
+      bienfaits:['Protéines végétales rassasiantes','Fibres pour une bonne digestion','Zéro culpabilité, 100% saveur','Parfait après une activité physique'],
+      prix:'2 000 FCFA', photo:null,
+    },
+    {
+      emoji:'🍫', nom:'Snacks & Friandises',
+      tagline:'Pour les petits creux qui ne préviennent pas.',
+      desc:'Assortiment de snacks et friandises importées pour petits et grands — Mars, Snickers, bonbons, fruits secs. Énergie rapide entre deux activités.',
+      bienfaits:['Énergie rapide entre les activités','Noix riches en bons acides gras','Variété de saveurs pour tous les goûts','Parfait pour les enfants'],
+      prix:'À partir de 200 FCFA', photo:null,
+    },
+  ],
+  beaute: [
+    {
+      emoji:'✨', nom:'Soins Visage Garnier',
+      tagline:'Le rituel beauté accessible à toutes.',
+      desc:'Sélection de soins Garnier adaptés à toutes les carnations — sérum, crème, masque. Disponibles à l\'achat sur place pour (re)découvrir ta routine.',
+      bienfaits:['Formules testées dermatologiquement','Adaptées aux peaux noires et métissées','Hydratation longue durée','Prix accessibles pour toutes'],
+      prix:'À partir de 3 000 FCFA', photo:null,
+    },
+    {
+      emoji:'🌸', nom:'Parfums & Huiles',
+      tagline:'Sentir bon, c\'est aussi prendre soin de soi.',
+      desc:'Sélection de parfums et huiles parfumées importés, testables sur place. Des fragrances choisies pour leur qualité et leur rapport qualité-prix.',
+      bienfaits:['Fragrances longue tenue','Fleuries, boisées et orientales au choix','Huiles parfumées naturelles disponibles','Idéales comme cadeaux pour soi ou autrui'],
+      prix:'À partir de 5 000 FCFA', photo:null,
+    },
+  ],
+  lifestyle: [
+    {
+      emoji:'🎁', nom:'Kit Goodies Renaître',
+      tagline:'Emporte un souvenir de cette journée unique.',
+      desc:'Le kit souvenir officiel de l\'événement — tote bag en coton aux couleurs de Renaître Ensemble, carnet pour tes intentions, stylo et surprises. Édition limitée.',
+      bienfaits:['Tote bag en coton réutilisable','Carnet pour tes intentions et affirmations','Édition limitée — quantités restreintes','Souvenir exclusif de l\'événement'],
+      prix:'5 000 FCFA', photo:null,
+    },
+    {
+      emoji:'🛍️', nom:'Shopping Lifestyle',
+      tagline:'Découvre, teste, et repartir les mains pleines.',
+      desc:'Un espace shopping avec des produits beauté, lifestyle et bien-être sélectionnés par les partenaires de l\'événement. Bonnes affaires garanties !',
+      bienfaits:['Produits sélectionnés par nos partenaires','Prix spéciaux événement','Découverte de nouvelles marques locales','Shopping dans une ambiance bien-être'],
+      prix:'Selon produit', photo:null,
+    },
+  ],
+};
+
+const catLabels = {boissons:'Boissons',food:'Food',beaute:'Beauté',lifestyle:'Goodies'};
+
+// ── Render toutes les grilles
+function renderAll() {
+  Object.entries(items).forEach(([cat, list]) => {
+    const grid = document.getElementById('grid-' + cat);
+    if (!grid) return;
+    grid.innerHTML = '';
+    list.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'look-card anim';
+      card.style.animationDelay = (i * 0.07) + 's';
+      card.onclick = () => openModal(item, catLabels[cat]);
+
+      const photoHTML = item.photo
+        ? `<img src="${item.photo}" alt="${item.nom}" loading="lazy"/>`
+        : `<div class="look-placeholder">
+             <div class="ph-top">
+               <span class="ph-tag">${catLabels[cat]}</span>
+               <span class="ph-add">+ ta photo</span>
+             </div>
+             <span class="ph-emoji">${item.emoji}</span>
+           </div>`;
+
+      card.innerHTML = `
+        <div class="look-photo">${photoHTML}</div>
+        <div class="look-info">
+          <div class="look-name">${item.nom}</div>
+          <div class="look-tagline">${item.tagline}</div>
+          <div class="look-footer">
+            <span class="look-price">${item.prix}</span>
+            <span class="look-detail">En savoir plus</span>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  });
+}
+
+// ── Filtre catégories
+function showCat(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cat-section').forEach(s => {
+    if (cat === 'all' || s.dataset.cat === cat) {
+      s.classList.remove('hidden');
+    } else {
+      s.classList.add('hidden');
+    }
+  });
+}
+
+// ── Modal
+function openModal(item, catLabel) {
+  // Photo
+  const ph = document.getElementById('modalPhoto');
+  ph.innerHTML = item.photo
+    ? `<img src="${item.photo}" alt="${item.nom}"/>
+       <button class="modal-close" onclick="closeModal()">✕</button>`
+    : `<div class="modal-ph">
+         <span>${item.emoji}</span>
+         <span>Photo à venir ♡</span>
+       </div>
+       <button class="modal-close" onclick="closeModal()">✕</button>`;
+
+  document.getElementById('modalBadge').textContent   = catLabel;
+  document.getElementById('modalName').textContent    = item.nom;
+  document.getElementById('modalTagline').textContent = item.tagline;
+  document.getElementById('modalDesc').textContent    = item.desc;
+  document.getElementById('modalPrice').textContent   = item.prix;
+
+  const ul = document.getElementById('modalBenefits');
+  ul.innerHTML = '';
+  item.bienfaits.forEach(b => {
+    const li = document.createElement('li');
+    li.textContent = b;
+    ul.appendChild(li);
+  });
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── Init
+renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reconnect Toi à Toi-Même — Inscription</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --rose:      #e8a4a4;
+      --rose-deep: #c97a7a;
+      --rose-pale: #f7e8e8;
+      --rose-blush:#fdf0f0;
+      --beige:     #f5ede3;
+      --beige-mid: #e8d5c0;
+      --cream:     #fdfaf7;
+      --text:      #3a2a2a;
+      --text-soft: #7a5c5c;
+      --white:     #ffffff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      background: linear-gradient(160deg, #fce8e8 0%, #f9ede3 50%, #fdf8f0 100%);
+      padding: 44px 24px 70px; text-align: center; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 80% 20%, rgba(232,164,164,0.22) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 50% at 10% 80%, rgba(232,164,164,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .petal { position: absolute; border-radius: 50% 0 50% 0; opacity: 0.11; animation: float 8s ease-in-out infinite; }
+    .petal:nth-child(1){width:100px;height:100px;background:var(--rose);top:-16px;left:5%;animation-delay:0s}
+    .petal:nth-child(2){width:70px;height:70px;background:var(--rose-deep);top:50px;right:7%;animation-delay:2s}
+    .petal:nth-child(3){width:55px;height:55px;background:var(--beige-mid);bottom:18px;left:13%;animation-delay:4s}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(8deg)}}
+
+    .hero-tag {
+      display:inline-block; font-size:10px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--rose-deep); border:1px solid var(--rose); border-radius:20px; padding:5px 16px; margin-bottom:16px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero h1 {
+      font-family:'Playfair Display',serif;
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight:700; line-height:1.05; color:var(--rose-deep);
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero h1 em { font-style:italic; font-weight:400; display:block; font-size:0.68em; color:var(--text); }
+    .hero-heart { display:inline-block; color:var(--rose); animation:heartbeat 1.6s ease infinite; }
+    @keyframes heartbeat{0%,100%{transform:scale(1)}30%{transform:scale(1.25)}60%{transform:scale(1.1)}}
+
+    .hero-sub {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size:clamp(13px, 2.4vw, 15px); color:var(--text-soft);
+      margin-top:10px; line-height:1.6; animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-info { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:18px; animation: fadeUp 0.8s 0.45s ease both; }
+    .hero-info span { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:var(--text-soft); }
+    .activities { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:16px; animation: fadeUp 0.8s 0.55s ease both; }
+    .activity-pill {
+      background:var(--white); border:1px solid var(--rose-pale); border-radius:40px;
+      padding:4px 12px; font-size:11px; color:var(--rose-deep); font-weight:500;
+      box-shadow:0 2px 8px rgba(201,122,122,0.08);
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── FORM ── */
+    .form-section { max-width:640px; margin:-26px auto 0; padding:0 16px 50px; position:relative; z-index:10; }
+    .form-card {
+      background:var(--white); border-radius:20px; padding:34px 32px;
+      box-shadow:0 8px 50px rgba(180,100,100,0.11), 0 2px 10px rgba(180,100,100,0.05);
+      animation: fadeUp 0.9s 0.6s ease both;
+    }
+    .form-title { font-family:'Playfair Display',serif; font-size:19px; color:var(--rose-deep); margin-bottom:4px; text-align:center; }
+    .form-subtitle { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--text-soft); text-align:center; margin-bottom:22px; }
+
+    .field-group { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+    .field-group.full { grid-template-columns:1fr; }
+    .field { display:flex; flex-direction:column; gap:5px; }
+    .field label { font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-soft); }
+    .field input {
+      border:1.5px solid var(--rose-pale); border-radius:9px; padding:10px 12px;
+      font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text);
+      background:var(--rose-blush); transition:border-color 0.25s,box-shadow 0.25s,background 0.25s; outline:none;
+    }
+    .field input:focus { border-color:var(--rose); box-shadow:0 0 0 3px rgba(232,164,164,0.18); background:var(--white); }
+    .field input::placeholder { color:#c8aaaa; }
+
+    .divider { height:1px; background:linear-gradient(to right,transparent,var(--rose-pale),transparent); margin:16px 0; }
+
+    .tickets-label { font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-soft); margin-bottom:9px; margin-top:4px; }
+    .tickets-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+    .ticket-option { position:relative; }
+    .ticket-option input[type="radio"] { position:absolute; opacity:0; width:0; height:0; }
+    .ticket-option label {
+      display:block; border:1.5px solid var(--rose-pale); border-radius:11px;
+      padding:11px 13px; cursor:pointer; background:var(--rose-blush);
+      transition:border-color 0.2s,background 0.2s,transform 0.15s;
+    }
+    .ticket-option label:hover { border-color:var(--rose); transform:translateY(-1px); }
+    .ticket-option input:checked + label { border-color:var(--rose-deep); background:linear-gradient(135deg,#fce8e8,#fff5f5); box-shadow:0 3px 12px rgba(201,122,122,0.15); }
+    .ticket-name { font-size:11px; font-weight:500; color:var(--rose-deep); display:block; }
+    .ticket-desc { font-size:10px; color:var(--text-soft); display:block; margin-top:2px; line-height:1.3; }
+    .ticket-price { font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--rose-deep); display:block; margin-top:4px; }
+
+    .qty-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+    .qty-label { font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-soft); flex:1; min-width:100px; }
+    .qty-control { display:flex; align-items:center; gap:10px; }
+    .qty-btn {
+      width:30px; height:30px; border-radius:50%; border:1.5px solid var(--rose);
+      background:var(--white); color:var(--rose-deep); font-size:17px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s; line-height:1;
+    }
+    .qty-btn:hover { background:var(--rose); color:var(--white); }
+    .qty-val { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--rose-deep); min-width:22px; text-align:center; }
+
+    .reduction-badge {
+      background:linear-gradient(135deg,#fce8e8,#fdf5f0); border:1px solid var(--rose-pale);
+      border-radius:9px; padding:9px 13px; font-size:11px; color:var(--text-soft); margin-bottom:14px; display:none;
+    }
+    .reduction-badge strong { color:var(--rose-deep); }
+    .reduction-badge.visible { display:block; }
+
+    .total-row {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 16px; background:linear-gradient(135deg,var(--rose-pale),var(--beige));
+      border-radius:11px; margin-bottom:18px;
+    }
+    .total-row .label { font-size:11px; font-weight:500; color:var(--text-soft); letter-spacing:0.05em; text-transform:uppercase; }
+    .total-row .amount { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--rose-deep); }
+
+    .btn-submit {
+      width:100%; padding:14px; background:linear-gradient(135deg,var(--rose-deep) 0%,#d98a8a 100%);
+      color:var(--white); border:none; border-radius:50px;
+      font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; letter-spacing:0.05em; cursor:pointer;
+      transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 6px 22px rgba(201,122,122,0.32);
+    }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,122,122,0.42); }
+    .form-note { text-align:center; font-size:10px; color:var(--text-soft); margin-top:10px; font-style:italic; }
+
+    /* ── SUCCESS ── */
+    .success-card { display:none; text-align:center; padding:6px 0; }
+    .success-card.show { display:block; }
+    .success-icon { font-size:46px; animation:heartbeat 1.6s ease infinite; display:block; margin-bottom:10px; }
+    .success-card h2 { font-family:'Playfair Display',serif; font-size:20px; color:var(--rose-deep); margin-bottom:5px; }
+    .success-card > p { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--text-soft); line-height:1.6; margin-bottom:20px; }
+
+    .success-actions { display:flex; flex-direction:column; gap:10px; align-items:center; margin-bottom:22px; }
+
+    .btn-dl {
+      display:inline-flex; align-items:center; gap:9px; padding:13px 28px;
+      background:linear-gradient(135deg,var(--rose-deep),#d98a8a); color:var(--white);
+      border:none; border-radius:50px; cursor:pointer;
+      font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500;
+      box-shadow:0 6px 20px rgba(201,122,122,0.3); transition:transform 0.2s,box-shadow 0.2s;
+      text-decoration:none;
+    }
+    .btn-dl:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(201,122,122,0.4); }
+
+    .btn-wa {
+      display:inline-flex; align-items:center; gap:9px; padding:13px 28px;
+      background:linear-gradient(135deg,#25D366,#1dbe58); color:var(--white);
+      border:none; border-radius:50px; cursor:pointer;
+      font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500;
+      box-shadow:0 6px 20px rgba(37,211,102,0.22); transition:transform 0.2s,box-shadow 0.2s;
+      text-decoration:none;
+    }
+    .btn-wa:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(37,211,102,0.32); }
+
+    /* ── BILLET PREVIEW ── */
+    #ticketPreview {
+      display:none;
+      background:linear-gradient(135deg,#fce8e8 0%,#fdf5f0 55%,#f9ede3 100%);
+      border:1.5px solid var(--rose-pale); border-radius:16px; padding:24px 22px 18px;
+      margin-top:20px; position:relative; overflow:hidden; text-align:left;
+    }
+    #ticketPreview.show { display:block; }
+    #ticketPreview::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background:linear-gradient(90deg,var(--rose-deep) 0%,var(--rose) 50%,var(--beige-mid) 100%);
+    }
+    .tp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+    .tp-event { font-family:'Playfair Display',serif; }
+    .tp-event .ev-sub { font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--rose-deep); display:block; }
+    .tp-event .ev-title { font-size:17px; font-weight:700; color:var(--text); line-height:1.1; }
+    .tp-event .ev-it { font-style:italic; font-weight:400; color:var(--rose-deep); }
+    .tp-badge {
+      background:var(--rose-deep); color:var(--white); border-radius:7px;
+      padding:5px 12px; font-size:10px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; white-space:nowrap;
+    }
+    .tp-dash { border:none; border-top:1.5px dashed var(--rose); margin:12px 0; }
+    .tp-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:12px; }
+    .tp-item { display:flex; flex-direction:column; gap:2px; }
+    .tp-item .ti-l { font-size:8px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft); }
+    .tp-item .ti-v { font-size:12px; font-weight:500; color:var(--text); }
+    .tp-total-row {
+      display:flex; justify-content:space-between; align-items:center;
+      background:rgba(201,122,122,0.09); border-radius:9px; padding:9px 13px;
+    }
+    .tp-total-row .tt-l { font-size:10px; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.07em; }
+    .tp-total-row .tt-a { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:var(--rose-deep); }
+    .tp-note { font-size:9px; color:var(--text-soft); font-style:italic; margin-top:10px; text-align:center; }
+    .tp-hearts { text-align:center; font-size:12px; color:var(--rose); letter-spacing:5px; margin-top:7px; }
+
+    /* footer */
+    .footer { text-align:center; padding:22px 16px 34px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--text-soft); line-height:1.8; }
+    .footer strong { color:var(--rose-deep); font-style:normal; }
+
+    @media(max-width:500px){
+      .form-card{padding:22px 16px}
+      .field-group{grid-template-columns:1fr}
+      .tickets-grid{grid-template-columns:1fr}
+      .tp-grid{grid-template-columns:1fr}
+      .success-actions{gap:8px}
+      .btn-dl,.btn-wa{padding:12px 20px; font-size:12px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+  <div class="hero-tag">Événement Bien-Être · Yaoundé · Décembre 2026</div>
+  <h1>
+    RECONNECT
+    <em>toi à toi-même <span class="hero-heart">♡</span></em>
+  </h1>
+  <p class="hero-sub">Prends soin de toi aujourd'hui<br/>pour être encore meilleure demain.</p>
+  <div class="hero-info">
+    <span>19 Décembre 2026</span>
+    <span>Yaoundé</span>
+    <span>Ouvert à tous</span>
+  </div>
+  <div class="activities">
+    <span class="activity-pill">Pilates · Yoga</span>
+    <span class="activity-pill">Danse &amp; Fun</span>
+    <span class="activity-pill">Jeux &amp; Interactions</span>
+    <span class="activity-pill">Buffet Bien-Être</span>
+    <span class="activity-pill">Témoignages</span>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-section">
+  <div class="form-card">
+
+    <!-- SUCCESS -->
+    <div class="success-card" id="successCard">
+      <span class="success-icon">🌸</span>
+      <h2>Inscription confirmée !</h2>
+      <p>Merci de rejoindre l'aventure.<br/>Viens pour toi, reste pour la magie. ♡</p>
+      <div class="success-actions">
+        <button class="btn-dl" onclick="downloadPDF()">⬇️&nbsp; Télécharger mon billet (PDF)</button>
+        <a class="btn-wa" id="waLink" href="#" target="_blank" rel="noopener">💬&nbsp; Rejoindre le groupe WhatsApp</a>
+      </div>
+
+      <!-- BILLET APERÇU -->
+      <div id="ticketPreview">
+        <div class="tp-header">
+          <div class="tp-event">
+            <span class="ev-sub">Événement Bien-Être</span>
+            <span class="ev-title">RECONNECT<br/><span class="ev-it">toi à toi-même</span></span>
+          </div>
+          <span class="tp-badge" id="prev-type">Standard</span>
+        </div>
+        <hr class="tp-dash"/>
+        <div class="tp-grid">
+          <div class="tp-item"><span class="ti-l">Participant(e)</span><span class="ti-v" id="prev-nom">—</span></div>
+          <div class="tp-item"><span class="ti-l">Téléphone</span><span class="ti-v" id="prev-tel">—</span></div>
+          <div class="tp-item"><span class="ti-l">Email</span><span class="ti-v" id="prev-email">—</span></div>
+          <div class="tp-item"><span class="ti-l">Places</span><span class="ti-v" id="prev-qty">1</span></div>
+          <div class="tp-item"><span class="ti-l">Date</span><span class="ti-v">Décembre 2026</span></div>
+          <div class="tp-item"><span class="ti-l">Lieu</span><span class="ti-v">Yaoundé</span></div>
+        </div>
+        <hr class="tp-dash"/>
+        <div class="tp-total-row">
+          <span class="tt-l">Total payé</span>
+          <span class="tt-a" id="prev-total">5 000 FCFA</span>
+        </div>
+        <p class="tp-note">Paiement par Mobile Money (MTN / Orange) • Non remboursable • Places limitées</p>
+        <div class="tp-hearts">♡ &nbsp; ♡ &nbsp; ♡</div>
+      </div>
+    </div>
+
+    <!-- FORM CONTENT -->
+    <div id="formContent">
+      <p class="form-title">Réserve ta place ♡</p>
+      <p class="form-subtitle">Places limitées — inscris-toi dès maintenant</p>
+
+      <div class="field-group">
+        <div class="field"><label>Prénom</label><input type="text" id="prenom" placeholder="Aminata"/></div>
+        <div class="field"><label>Nom</label><input type="text" id="nom" placeholder="Nguemo"/></div>
+      </div>
+      <div class="field-group full">
+        <div class="field"><label>Email</label><input type="email" id="email" placeholder="aminata@email.com"/></div>
+      </div>
+      <div class="field-group full">
+        <div class="field"><label>Téléphone (WhatsApp)</label><input type="tel" id="tel" placeholder="+237 6XX XXX XXX"/></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="tickets-label">Type de billet</p>
+      <div class="tickets-grid">
+        <div class="ticket-option">
+          <input type="radio" name="ticket" id="t-std" value="5000" data-label="Standard" checked/>
+          <label for="t-std">
+            <span class="ticket-name">Standard</span>
+            <span class="ticket-desc">Accès à toutes les activités</span>
+            <span class="ticket-price">5 000 FCFA</span>
+          </label>
+        </div>
+        <div class="ticket-option">
+          <input type="radio" name="ticket" id="t-pre" value="10000" data-label="Premium"/>
+          <label for="t-pre">
+            <span class="ticket-name">Premium</span>
+            <span class="ticket-desc">+ Buffet bien-être inclus</span>
+            <span class="ticket-price">10 000 FCFA</span>
+          </label>
+        </div>
+        <div class="ticket-option">
+          <input type="radio" name="ticket" id="t-vip" value="15000" data-label="VIP"/>
+          <label for="t-vip">
+            <span class="ticket-name">VIP</span>
+            <span class="ticket-desc">Expérience complète &amp; privilèges</span>
+            <span class="ticket-price">15 000 FCFA</span>
+          </label>
+        </div>
+        <div class="ticket-option">
+          <input type="radio" name="ticket" id="t-enf" value="5000" data-label="Enfant"/>
+          <label for="t-enf">
+            <span class="ticket-name">Enfant</span>
+            <span class="ticket-desc">3-12 ans · Accès animations</span>
+            <span class="ticket-price">5 000 FCFA</span>
+          </label>
+        </div>
+        <div class="ticket-option">
+          <input type="radio" name="ticket" id="t-eg" value="7000" data-label="Enfant + Goodies"/>
+          <label for="t-eg">
+            <span class="ticket-name">Enfant + Goodies</span>
+            <span class="ticket-desc">3-12 ans · + Goodie bag</span>
+            <span class="ticket-price">7 000 FCFA</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="qty-row">
+        <span class="qty-label">Nombre de places</span>
+        <div class="qty-control">
+          <button class="qty-btn" id="qtyMinus">−</button>
+          <span class="qty-val" id="qtyVal">1</span>
+          <button class="qty-btn" id="qtyPlus">+</button>
+        </div>
+      </div>
+
+      <div class="reduction-badge" id="reductionBadge">
+        🎉 Réduction famille appliquée : <strong id="reductionPct"></strong> sur le total !
+      </div>
+
+      <div class="total-row">
+        <span class="label">Total estimé</span>
+        <span class="amount" id="totalDisplay">5 000 FCFA</span>
+      </div>
+
+      <button class="btn-submit" onclick="handleSubmit()">Je réserve ma place ♡</button>
+      <p class="form-note">Paiement par Mobile Money (MTN / Orange) • Places limitées</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <em>« Une journée pour toi, pour ton corps et ton esprit.<br/>
+  Viens seule, entre amis ou en famille…<br/>
+  Mais surtout, viens pour <strong>TOI !</strong> ♡ »</em>
+</div>
+
+<script>
+  // ══════════════════════════════════════════
+  // ⚠️  REMPLACE CE LIEN PAR TON VRAI LIEN WHATSAPP
+  const WHATSAPP_LINK = 'https://chat.whatsapp.com/TONLIENIGICI';
+  // ══════════════════════════════════════════
+
+  let qty = 1;
+  let resData = {};
+
+  const qtyEl    = document.getElementById('qtyVal');
+  const totalEl  = document.getElementById('totalDisplay');
+  const redBadge = document.getElementById('reductionBadge');
+  const redPctEl = document.getElementById('reductionPct');
+
+  function getTicketInfo() {
+    const r = document.querySelector('input[name="ticket"]:checked');
+    return { price: r ? parseInt(r.value) : 5000, label: r ? r.getAttribute('data-label') : 'Standard' };
+  }
+  function getReduction(n) { return n>=5?0.20:n>=4?0.15:n>=3?0.10:0; }
+  function fmt(n) { return n.toLocaleString('fr-FR') + ' FCFA'; }
+  function calcTotal() { const {price}=getTicketInfo(); const r=getReduction(qty); return Math.round(price*qty*(1-r)); }
+
+  function updateTotal() {
+    const total = calcTotal();
+    const r = getReduction(qty);
+    totalEl.textContent = fmt(total);
+    if (r > 0) { redBadge.classList.add('visible'); redPctEl.textContent = '-'+(r*100)+'%'; }
+    else { redBadge.classList.remove('visible'); }
+  }
+
+  document.getElementById('qtyMinus').addEventListener('click', () => { if(qty>1){qty--;qtyEl.textContent=qty;updateTotal();} });
+  document.getElementById('qtyPlus').addEventListener('click',  () => { if(qty<10){qty++;qtyEl.textContent=qty;updateTotal();} });
+  document.querySelectorAll('input[name="ticket"]').forEach(r => r.addEventListener('change', updateTotal));
+
+  function handleSubmit() {
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom    = document.getElementById('nom').value.trim();
+    const email  = document.getElementById('email').value.trim();
+    const tel    = document.getElementById('tel').value.trim();
+    if (!prenom||!nom||!email||!tel) { alert('Merci de remplir tous les champs avant de continuer ♡'); return; }
+
+    const {label} = getTicketInfo();
+    const total   = calcTotal();
+    resData = { prenom, nom, email, tel, label, qty, total };
+
+    // Remplir aperçu billet
+    document.getElementById('prev-nom').textContent   = prenom + ' ' + nom;
+    document.getElementById('prev-tel').textContent   = tel;
+    document.getElementById('prev-email').textContent = email;
+    document.getElementById('prev-qty').textContent   = qty + ' place' + (qty>1?'s':'');
+    document.getElementById('prev-type').textContent  = label;
+    document.getElementById('prev-total').textContent = fmt(total);
+
+    document.getElementById('waLink').href = WHATSAPP_LINK;
+
+    document.getElementById('formContent').style.display = 'none';
+    const sc = document.getElementById('successCard');
+    sc.classList.add('show'); sc.style.display = 'block';
+    document.getElementById('ticketPreview').classList.add('show');
+  }
+
+  // ── PDF ──
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a5' });
+    const W=148, H=210, d=resData;
+
+    // Fond
+    doc.setFillColor(252,232,232); doc.rect(0,0,W,H,'F');
+    doc.setFillColor(253,245,240); doc.rect(0,H*0.45,W,H*0.55,'F');
+
+    // Bande couleur top
+    doc.setFillColor(201,122,122); doc.rect(0,0,W*0.34,4,'F');
+    doc.setFillColor(232,164,164); doc.rect(W*0.34,0,W*0.33,4,'F');
+    doc.setFillColor(232,213,192); doc.rect(W*0.67,0,W*0.33,4,'F');
+
+    // Tag événement
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7); doc.setTextColor(201,122,122);
+    const tagText = 'EVENEMENT BIEN-ETRE  -  YAOUNDE  -  DECEMBRE 2026';
+    doc.text(tagText, W/2, 13, {align:'center'});
+
+    // Titre
+    doc.setFont('times','bold');
+    doc.setFontSize(28); doc.setTextColor(58,42,42);
+    doc.text('RECONNECT', W/2, 24, {align:'center'});
+
+    doc.setFont('times','italic');
+    doc.setFontSize(17); doc.setTextColor(201,122,122);
+    doc.text('toi a toi-meme  ♡', W/2, 33, {align:'center'});
+
+    // Badge type billet
+    doc.setFillColor(201,122,122);
+    doc.roundedRect(W/2-24,37,48,9,4,4,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(255,255,255);
+    const cleanLabel = d.label.replace(/[^\x00-\x7E]/g,'').trim() || 'Billet';
+    doc.text(cleanLabel.toUpperCase(), W/2, 42.8, {align:'center'});
+
+    // Ligne pointillée
+    doc.setDrawColor(232,164,164); doc.setLineDashPattern([2,2],0);
+    doc.line(10,50,W-10,50); doc.setLineDashPattern([],0);
+
+    // Grille infos
+    const startY=58, col1=14, col2=W/2+4, rh=14;
+
+    function drawInfo(x,y,lbl,val){
+      doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(122,92,92);
+      doc.text(lbl.toUpperCase(),x,y);
+      doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(58,42,42);
+      doc.text(String(val),x,y+5.5);
+    }
+    drawInfo(col1,startY,       'Participant(e)', d.prenom+' '+d.nom);
+    drawInfo(col2,startY,       'Telephone',      d.tel);
+    drawInfo(col1,startY+rh,   'Email',           d.email);
+    drawInfo(col2,startY+rh,   'Places',          d.qty+' place'+(d.qty>1?'s':''));
+    drawInfo(col1,startY+rh*2, 'Date',            'Decembre 2026');
+    drawInfo(col2,startY+rh*2, 'Lieu',            'Yaounde');
+
+    // Ligne pointillée
+    const dashY=startY+rh*3+2;
+    doc.setDrawColor(232,164,164); doc.setLineDashPattern([2,2],0);
+    doc.line(10,dashY,W-10,dashY); doc.setLineDashPattern([],0);
+
+    // Bloc total
+    const totY=dashY+10;
+    doc.setFillColor(252,232,232); doc.roundedRect(10,totY-5,W-20,16,4,4,'F');
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(122,92,92);
+    doc.text('TOTAL PAYE',16,totY+3);
+    doc.setFont('times','bold'); doc.setFontSize(18); doc.setTextColor(201,122,122);
+    const totStr=d.total.toLocaleString('fr-FR')+' FCFA';
+    doc.text(totStr,W-16,totY+4,{align:'right'});
+
+    // Note
+    doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(160,120,120);
+    doc.text('Paiement Mobile Money (MTN/Orange)  •  Non remboursable  •  Places limitees', W/2,totY+22,{align:'center'});
+
+    // Coeurs
+    doc.setFont('times','normal'); doc.setFontSize(13); doc.setTextColor(232,164,164);
+    doc.text('♡   ♡   ♡', W/2, totY+32, {align:'center'});
+
+    // Citation bas
+    doc.setFont('times','italic'); doc.setFontSize(8); doc.setTextColor(122,92,92);
+    doc.text('« Viens pour toi, reste pour la magie. »', W/2, H-10, {align:'center'});
+
+    doc.save('billet-reconnect-'+d.prenom.toLowerCase()+'.pdf');
+  }
+
+  updateTotal();
+</script>
+</body>
+</html>
