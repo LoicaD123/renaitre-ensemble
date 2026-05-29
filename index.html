@@ -18,6 +18,7 @@
       --text:      #3a2a2a;
       --text-soft: #7a5c5c;
       --white:     #ffffff;
+      --noir:      #1c1c1c;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
@@ -69,6 +70,66 @@
       box-shadow:0 2px 8px rgba(201,122,122,0.08);
     }
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── BANNIÈRE CATALOGUE ── */
+    .catalogue-banner {
+      max-width: 640px; margin: 22px auto 0; padding: 0 16px;
+    }
+    .catalogue-banner a {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; text-decoration: none;
+      background: var(--noir);
+      border-radius: 18px; padding: 20px 24px;
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+      box-shadow: 0 8px 32px rgba(30,18,18,.18);
+    }
+    .catalogue-banner a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(30,18,18,.25);
+    }
+    .catalogue-banner a::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 0% 50%, rgba(232,164,164,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .catalogue-banner a::after {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: linear-gradient(to bottom, var(--rose-deep), var(--rose), var(--beige-mid));
+      border-radius: 4px 0 0 4px;
+    }
+    .cb-left { display: flex; flex-direction: column; gap: 4px; position: relative; z-index: 1; }
+    .cb-tag {
+      font-size: 9px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 2px;
+    }
+    .cb-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(15px, 3.5vw, 18px); font-weight: 700;
+      color: var(--white); line-height: 1.2;
+    }
+    .cb-title em { font-style: italic; font-weight: 400; color: var(--rose); }
+    .cb-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 12px; color: rgba(255,255,255,.4); margin-top: 2px;
+    }
+    .cb-right {
+      display: flex; align-items: center; gap: 10px;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .cb-emojis { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+    .cb-emojis span { font-size: 18px; line-height: 1; }
+    .cb-arrow {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-deep), #d98a8a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--white);
+      box-shadow: 0 4px 14px rgba(201,122,122,.4);
+      transition: transform .2s;
+    }
+    .catalogue-banner a:hover .cb-arrow { transform: translateX(3px); }
 
     /* ── FORM ── */
     .form-section { max-width:640px; margin:-26px auto 0; padding:0 16px 50px; position:relative; z-index:10; }
@@ -219,6 +280,8 @@
       .tp-grid{grid-template-columns:1fr}
       .success-actions{gap:8px}
       .btn-dl,.btn-wa{padding:12px 20px; font-size:12px;}
+      .cb-emojis{display:none}
+      .catalogue-banner a{padding:16px 18px}
     }
   </style>
 </head>
@@ -245,6 +308,25 @@
     <span class="activity-pill">Buffet Bien-Être</span>
     <span class="activity-pill">Témoignages</span>
   </div>
+</div>
+
+<!-- BANNIÈRE CATALOGUE -->
+<div class="catalogue-banner">
+  <a href="https://renaitre-ensemble.vercel.app/catalogue-boutique.html" target="_blank">
+    <div class="cb-left">
+      <span class="cb-tag">Disponible le jour J</span>
+      <span class="cb-title">Ce qui t'attend<em> sur place ♡</em></span>
+      <span class="cb-sub">Boissons détox · Food · Beauté · Goodies — prépare ton budget !</span>
+    </div>
+    <div class="cb-right">
+      <div class="cb-emojis">
+        <span>🍵</span>
+        <span>✨</span>
+        <span>🎁</span>
+      </div>
+      <div class="cb-arrow">→</div>
+    </div>
+  </a>
 </div>
 
 <!-- FORM -->
@@ -384,10 +466,7 @@
 </div>
 
 <script>
-  // ══════════════════════════════════════════
-  // ⚠️  REMPLACE CE LIEN PAR TON VRAI LIEN WHATSAPP
   const WHATSAPP_LINK = 'https://chat.whatsapp.com/TONLIENIGICI';
-  // ══════════════════════════════════════════
 
   let qty = 1;
   let resData = {};
@@ -428,7 +507,6 @@
     const total   = calcTotal();
     resData = { prenom, nom, email, tel, label, qty, total };
 
-    // Remplir aperçu billet
     document.getElementById('prev-nom').textContent   = prenom + ' ' + nom;
     document.getElementById('prev-tel').textContent   = tel;
     document.getElementById('prev-email').textContent = email;
@@ -450,42 +528,34 @@
     const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a5' });
     const W=148, H=210, d=resData;
 
-    // Fond
     doc.setFillColor(252,232,232); doc.rect(0,0,W,H,'F');
     doc.setFillColor(253,245,240); doc.rect(0,H*0.45,W,H*0.55,'F');
 
-    // Bande couleur top
     doc.setFillColor(201,122,122); doc.rect(0,0,W*0.34,4,'F');
     doc.setFillColor(232,164,164); doc.rect(W*0.34,0,W*0.33,4,'F');
     doc.setFillColor(232,213,192); doc.rect(W*0.67,0,W*0.33,4,'F');
 
-    // Tag événement
     doc.setFont('helvetica','normal');
     doc.setFontSize(7); doc.setTextColor(201,122,122);
-    const tagText = 'EVENEMENT BIEN-ETRE  -  YAOUNDE  -  DECEMBRE 2026';
-    doc.text(tagText, W/2, 13, {align:'center'});
+    doc.text('EVENEMENT BIEN-ETRE  -  YAOUNDE  -  DECEMBRE 2026', W/2, 13, {align:'center'});
 
-    // Titre
     doc.setFont('times','bold');
     doc.setFontSize(28); doc.setTextColor(58,42,42);
     doc.text('RECONNECT', W/2, 24, {align:'center'});
 
     doc.setFont('times','italic');
     doc.setFontSize(17); doc.setTextColor(201,122,122);
-    doc.text('toi a toi-meme  ♡', W/2, 33, {align:'center'});
+    doc.text('toi a toi-meme', W/2, 33, {align:'center'});
 
-    // Badge type billet
     doc.setFillColor(201,122,122);
     doc.roundedRect(W/2-24,37,48,9,4,4,'F');
     doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(255,255,255);
     const cleanLabel = d.label.replace(/[^\x00-\x7E]/g,'').trim() || 'Billet';
     doc.text(cleanLabel.toUpperCase(), W/2, 42.8, {align:'center'});
 
-    // Ligne pointillée
     doc.setDrawColor(232,164,164); doc.setLineDashPattern([2,2],0);
     doc.line(10,50,W-10,50); doc.setLineDashPattern([],0);
 
-    // Grille infos
     const startY=58, col1=14, col2=W/2+4, rh=14;
 
     function drawInfo(x,y,lbl,val){
@@ -498,34 +568,31 @@
     drawInfo(col2,startY,       'Telephone',      d.tel);
     drawInfo(col1,startY+rh,   'Email',           d.email);
     drawInfo(col2,startY+rh,   'Places',          d.qty+' place'+(d.qty>1?'s':''));
-    drawInfo(col1,startY+rh*2, 'Date',            'Decembre 2026');
+    drawInfo(col1,startY+rh*2, 'Date',            '19 Decembre 2026');
     drawInfo(col2,startY+rh*2, 'Lieu',            'Yaounde');
 
-    // Ligne pointillée
     const dashY=startY+rh*3+2;
     doc.setDrawColor(232,164,164); doc.setLineDashPattern([2,2],0);
     doc.line(10,dashY,W-10,dashY); doc.setLineDashPattern([],0);
 
-    // Bloc total
     const totY=dashY+10;
     doc.setFillColor(252,232,232); doc.roundedRect(10,totY-5,W-20,16,4,4,'F');
     doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(122,92,92);
     doc.text('TOTAL PAYE',16,totY+3);
     doc.setFont('times','bold'); doc.setFontSize(18); doc.setTextColor(201,122,122);
-    const totStr=d.total.toLocaleString('fr-FR')+' FCFA';
-    doc.text(totStr,W-16,totY+4,{align:'right'});
 
-    // Note
+    // Formatage sans espace insécable
+    function fmtPDF(n){const s=Math.round(n).toString();let r='';for(let i=0;i<s.length;i++){if(i>0&&(s.length-i)%3===0)r+=' ';r+=s[i];}return r+' FCFA';}
+    doc.text(fmtPDF(d.total),W-16,totY+4,{align:'right'});
+
     doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(160,120,120);
-    doc.text('Paiement Mobile Money (MTN/Orange)  •  Non remboursable  •  Places limitees', W/2,totY+22,{align:'center'});
+    doc.text('Paiement Mobile Money (MTN/Orange)  *  Non remboursable  *  Places limitees', W/2,totY+22,{align:'center'});
 
-    // Coeurs
-    doc.setFont('times','normal'); doc.setFontSize(13); doc.setTextColor(232,164,164);
-    doc.text('♡   ♡   ♡', W/2, totY+32, {align:'center'});
+    doc.setFont('times','bold'); doc.setFontSize(14); doc.setTextColor(232,164,164);
+    doc.text('*     *     *', W/2, totY+32, {align:'center'});
 
-    // Citation bas
     doc.setFont('times','italic'); doc.setFontSize(8); doc.setTextColor(122,92,92);
-    doc.text('« Viens pour toi, reste pour la magie. »', W/2, H-10, {align:'center'});
+    doc.text('"Viens pour toi, reste pour la magie."', W/2, H-10, {align:'center'});
 
     doc.save('billet-reconnect-'+d.prenom.toLowerCase()+'.pdf');
   }
