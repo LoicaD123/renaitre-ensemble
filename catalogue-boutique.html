@@ -13,312 +13,419 @@
   --white:#ffffff; --noir:#1c1c1c;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 
-/* ══ HERO ══ */
-.hero{background:var(--noir);min-height:52vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px 52px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(232,164,164,.1) 0%,transparent 70%);pointer-events:none;}
-.hero-ring{position:absolute;border-radius:50%;border:1px solid rgba(232,164,164,.1)}
-.hero-ring:nth-child(1){width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%)}
-.hero-ring:nth-child(2){width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(232,164,164,.06)}
-.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rose-deep) 0%,var(--rose) 50%,var(--beige-mid) 100%)}
-.back-link{position:absolute;top:22px;left:22px;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;z-index:2;}
+/* ── PAGE FOND ── */
+body {
+  background: linear-gradient(160deg, #1c1c1c 0%, #2a1a1a 50%, #1c1c1c 100%);
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 60px;
+  overflow-x: hidden;
+}
+
+/* ── HEADER PAGE ── */
+.page-header { text-align: center; margin-bottom: 32px; }
+.page-header .ph-tag {
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--rose); margin-bottom: 8px; display: block;
+}
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  color: var(--white); font-weight: 400; line-height: 1.1;
+}
+.page-header h1 em { font-style: italic; color: var(--rose); display: block; font-size: 0.75em; }
+.page-header .ph-sub {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 6px;
+}
+
+/* ── IPHONE ── */
+.iphone-wrap { position: relative; width: 320px; flex-shrink: 0; }
+.dynamic-island {
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  width: 130px; height: 30px; background: #000; border-radius: 20px;
+  z-index: 20; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 10px; gap: 6px; overflow: hidden;
+}
+.di-cam { width: 10px; height: 10px; border-radius: 50%; background: #1a1a1a; border: 1px solid #2a2a2a; flex-shrink: 0; }
+.di-text { display: flex; flex-direction: column; align-items: center; flex: 1; overflow: hidden; }
+.di-text span:first-child { font-size: 5.5px; color: var(--rose); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+.di-text span:last-child { font-size: 5px; color: rgba(255,255,255,0.45); white-space: nowrap; }
+.di-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rose-deep); flex-shrink: 0; box-shadow: 0 0 5px rgba(201,122,122,0.7); }
+.iphone-btn-left { position: absolute; left: -3px; background: #2a2a2a; border-radius: 2px; }
+.iphone-btn-right { position: absolute; right: -3px; background: #2a2a2a; border-radius: 2px; }
+
+.iphone-screen {
+  position: relative; margin: 0 auto;
+  width: 280px; height: 570px; border-radius: 42px; overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 0 0 2px #1a1a1a, 0 0 0 6px #111, 0 0 0 8px #222, 0 0 60px rgba(0,0,0,0.8);
+}
+.iphone-screen-inner {
+  width: 100%; height: 100%; overflow-y: scroll;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.iphone-screen-inner::-webkit-scrollbar { display: none; }
+
+/* ══ CONTENU CATALOGUE ══ */
+
+/* HERO */
+.hero {
+  background: var(--noir); padding: 44px 14px 36px;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(232,164,164,.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-ring { position:absolute; border-radius:50%; border:1px solid rgba(232,164,164,.1) }
+.hero-ring:nth-child(1){width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.hero-ring:nth-child(2){width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(232,164,164,.06)}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--rose-deep) 0%,var(--rose) 50%,var(--beige-mid) 100%)}
+
+.back-link {
+  position:absolute; top:14px; left:14px;
+  display:flex; align-items:center; gap:4px;
+  font-size:8px; font-weight:500; letter-spacing:.06em;
+  color:rgba(255,255,255,.4); text-decoration:none; transition:color .2s; z-index:2;
+}
 .back-link:hover{color:var(--rose)}
-.back-link::before{content:'←';font-size:14px}
-.hero-tag{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--rose);border:1px solid rgba(232,164,164,.3);border-radius:20px;padding:5px 18px;margin-bottom:20px;position:relative;z-index:1;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,8vw,68px);font-weight:300;line-height:1;color:var(--white);position:relative;z-index:1;}
+.back-link::before{content:'←';font-size:10px}
+
+.hero-tag {
+  display:inline-block; font-size:7px; font-weight:500; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--rose); border:1px solid rgba(232,164,164,.3);
+  border-radius:20px; padding:3px 12px; margin-bottom:14px; position:relative; z-index:1;
+}
+.hero h1 {
+  font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300;
+  line-height:1; color:var(--white); position:relative; z-index:1;
+}
 .hero h1 em{font-style:italic;color:var(--rose);display:block;font-size:.85em}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,2.5vw,17px);color:rgba(255,255,255,.45);margin-top:14px;line-height:1.65;max-width:480px;position:relative;z-index:1;}
-.hero-note{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(232,164,164,.1);border:1px solid rgba(232,164,164,.2);border-radius:40px;padding:8px 20px;font-size:11px;color:rgba(255,255,255,.5);position:relative;z-index:1;}
+.hero-sub {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:9px; color:rgba(255,255,255,.45); margin-top:8px; line-height:1.6;
+  max-width:220px; position:relative; z-index:1;
+}
+.hero-note {
+  margin-top:12px; display:inline-flex; align-items:center; gap:6px;
+  background:rgba(232,164,164,.1); border:1px solid rgba(232,164,164,.2);
+  border-radius:40px; padding:5px 12px;
+  font-size:7px; color:rgba(255,255,255,.5); position:relative; z-index:1;
+}
 .hero-note strong{color:var(--rose);font-weight:500}
 
-/* ══ INTRO ══ */
-.intro{text-align:center;padding:52px 24px 32px;max-width:600px;margin:0 auto;}
-.intro h2{font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,28px);font-weight:700;color:var(--rose-deep);margin-bottom:10px;}
-.intro p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--text-soft);line-height:1.75;}
+/* INTRO */
+.intro{text-align:center;padding:24px 14px 16px;max-width:100%;margin:0 auto;}
+.intro h2{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--rose-deep);margin-bottom:6px;}
+.intro p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10px;color:var(--text-soft);line-height:1.7;}
 
-/* ══ CATÉGORIES NAV ══ */
-.cat-nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:0 20px 36px;}
-.cat-btn{background:var(--white);border:1.5px solid var(--rose-pale);border-radius:40px;padding:8px 20px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--text-soft);cursor:pointer;transition:all .2s;}
+/* NAV */
+.cat-nav{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;padding:0 10px 20px;}
+.cat-btn{
+  background:var(--white);border:1.5px solid var(--rose-pale);border-radius:40px;
+  padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:500;
+  color:var(--text-soft);cursor:pointer;transition:all .2s;
+}
 .cat-btn:hover,.cat-btn.active{background:var(--rose-deep);border-color:var(--rose-deep);color:var(--white);}
 
-/* ══ SECTION CATÉGORIE ══ */
-.cat-section{max-width:900px;margin:0 auto;padding:0 20px 56px}
+/* SECTIONS */
+.cat-section{max-width:100%;margin:0 auto;padding:0 12px 32px}
 .cat-section.hidden{display:none}
-.cat-section-header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--rose-pale);}
-.cat-emoji{font-size:28px}
-.cat-section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);}
-.cat-section-sub{font-size:12px;color:var(--text-soft);margin-top:2px}
+.cat-section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--rose-pale);}
+.cat-emoji{font-size:18px}
+.cat-section-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);}
+.cat-section-sub{font-size:8px;color:var(--text-soft);margin-top:1px}
 
-/* ══ MENU BOISSONS ══ */
-.menu-boissons{max-width:900px;margin:0 auto;padding:0 20px 56px}
+/* MENU BOISSONS */
+.menu-boissons{max-width:100%;margin:0 auto;padding:0 12px 32px}
 .menu-boissons.hidden{display:none}
-.menu-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--rose-pale);}
-.menu-sous-cat{margin-bottom:36px;}
+.menu-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--rose-pale);}
+.menu-sous-cat{margin-bottom:20px;}
 .menu-sous-titre{
-  font-family:'Playfair Display',serif;font-size:16px;font-weight:700;
-  color:var(--rose-deep);margin-bottom:16px;
-  display:flex;align-items:center;gap:10px;
+  font-family:'Playfair Display',serif;font-size:11px;font-weight:700;
+  color:var(--rose-deep);margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
 }
 .menu-sous-titre::after{content:'';flex:1;height:1px;background:var(--rose-pale);}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.menu-grid{display:flex;flex-direction:column;gap:7px;}
 .menu-item{
-  background:var(--white);border:1.5px solid var(--rose-pale);border-radius:16px;
-  padding:16px 18px;display:flex;align-items:center;justify-content:space-between;
-  gap:12px;transition:transform .2s,box-shadow .2s,border-color .2s;
+  background:var(--white);border:1.5px solid var(--rose-pale);border-radius:10px;
+  padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;
 }
-.menu-item:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,122,122,.1);border-color:var(--rose);}
-.menu-item-left{display:flex;align-items:center;gap:12px;}
+.menu-item-left{display:flex;align-items:center;gap:8px;}
 .menu-item-photo{
-  width:52px;height:52px;border-radius:12px;overflow:hidden;flex-shrink:0;
+  width:36px;height:36px;border-radius:8px;overflow:hidden;flex-shrink:0;
   background:linear-gradient(135deg,var(--rose-pale),var(--beige));
-  display:flex;align-items:center;justify-content:center;font-size:22px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
 }
 .menu-item-photo img{width:100%;height:100%;object-fit:cover;}
-.menu-item-info{}
-.menu-item-nom{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:3px;}
-.menu-item-desc{font-size:11px;color:var(--text-soft);line-height:1.4;}
-.menu-item-prix{
-  font-family:'Playfair Display',serif;font-size:15px;font-weight:700;
-  color:var(--rose-deep);white-space:nowrap;flex-shrink:0;
-}
+.menu-item-nom{font-family:'Playfair Display',serif;font-size:10px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:2px;}
+.menu-item-desc{font-size:8px;color:var(--text-soft);line-height:1.3;}
+.menu-item-prix{font-family:'Playfair Display',serif;font-size:10px;font-weight:700;color:var(--rose-deep);white-space:nowrap;flex-shrink:0;}
 
-/* ══ GRILLE LOOKBOOK ══ */
-.lookbook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
-.look-card{border-radius:20px;overflow:hidden;background:var(--white);border:1.5px solid var(--rose-pale);cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;}
-.look-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(201,122,122,.13);border-color:var(--rose);}
-.look-photo{width:100%;aspect-ratio:4/3;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--rose-pale) 0%,var(--beige) 100%);display:flex;align-items:center;justify-content:center;}
-.look-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
-.look-card:hover .look-photo img{transform:scale(1.06)}
-.look-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;}
-.look-placeholder .ph-emoji{font-size:52px;opacity:.6;transition:transform .3s}
-.look-card:hover .ph-emoji{transform:scale(1.1)}
-.look-placeholder .ph-top{position:absolute;top:14px;left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;}
-.look-placeholder .ph-tag{font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-deep);background:rgba(255,255,255,.8);border-radius:20px;padding:3px 10px;backdrop-filter:blur(4px);}
-.look-placeholder .ph-add{font-size:9px;color:var(--text-soft);opacity:.6;background:rgba(255,255,255,.7);border-radius:20px;padding:3px 10px;}
-.look-info{padding:16px 18px 18px}
-.look-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.2;}
-.look-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--text-soft);line-height:1.45;margin-bottom:12px;}
-.look-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--rose-pale);}
-.look-price{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--rose-deep);}
-.look-detail{font-size:10px;font-weight:500;color:var(--rose);display:flex;align-items:center;gap:4px;}
-.look-detail::after{content:'→';font-size:12px}
+/* LOOKBOOK */
+.lookbook-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.look-card{border-radius:12px;overflow:hidden;background:var(--white);border:1.5px solid var(--rose-pale);cursor:pointer;transition:transform .25s,box-shadow .25s;}
+.look-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(201,122,122,.13);}
+.look-photo{width:100%;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(135deg,var(--rose-pale) 0%,var(--beige) 100%);display:flex;align-items:center;justify-content:center;}
+.look-photo img{width:100%;height:100%;object-fit:cover;}
+.look-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;}
+.look-placeholder .ph-emoji{font-size:28px;opacity:.6;}
+.look-placeholder .ph-top{position:absolute;top:6px;left:6px;right:6px;display:flex;align-items:center;justify-content:space-between;}
+.look-placeholder .ph-tag{font-size:6px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--rose-deep);background:rgba(255,255,255,.8);border-radius:20px;padding:2px 6px;}
+.look-info{padding:8px 9px 10px}
+.look-name{font-family:'Playfair Display',serif;font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px;line-height:1.2;}
+.look-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:8px;color:var(--text-soft);line-height:1.4;margin-bottom:7px;}
+.look-footer{display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid var(--rose-pale);}
+.look-price{font-family:'Playfair Display',serif;font-size:10px;font-weight:700;color:var(--rose-deep);}
+.look-detail{font-size:7px;font-weight:500;color:var(--rose);}
+.look-detail::after{content:'→';font-size:8px;margin-left:2px;}
 
-/* ══ MODAL PRODUIT ══ */
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(30,18,18,.5);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s;}
 .modal-overlay.open{opacity:1;pointer-events:auto}
-.modal{background:var(--white);border-radius:24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(28px) scale(.97);transition:transform .3s;box-shadow:0 40px 90px rgba(30,18,18,.2);}
+.modal{background:var(--white);border-radius:20px;max-width:280px;width:100%;max-height:80vh;overflow-y:auto;transform:translateY(20px) scale(.97);transition:transform .3s;box-shadow:0 30px 70px rgba(30,18,18,.25);}
 .modal-overlay.open .modal{transform:translateY(0) scale(1)}
-.modal-photo{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--rose-pale),var(--beige));display:flex;align-items:center;justify-content:center;border-radius:24px 24px 0 0;}
+.modal-photo{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--rose-pale),var(--beige));display:flex;align-items:center;justify-content:center;border-radius:20px 20px 0 0;}
 .modal-photo img{width:100%;height:100%;object-fit:cover}
-.modal-photo .modal-ph{display:flex;flex-direction:column;align-items:center;gap:8px;}
-.modal-photo .modal-ph span:first-child{font-size:64px;opacity:.5}
-.modal-photo .modal-ph span:last-child{font-size:11px;color:var(--text-soft);opacity:.6;letter-spacing:.1em;text-transform:uppercase}
-.modal-close{position:absolute;top:14px;right:14px;width:34px;height:34px;background:rgba(255,255,255,.92);border:none;border-radius:50%;cursor:pointer;font-size:16px;color:var(--text-soft);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:background .2s,color .2s;}
-.modal-close:hover{background:var(--white);color:var(--rose-deep)}
-.modal-body{padding:24px 26px 28px}
-.modal-badge{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rose-deep);background:var(--rose-pale);border-radius:20px;padding:4px 12px;margin-bottom:12px;}
-.modal-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.15;}
-.modal-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--text-soft);margin-bottom:16px;line-height:1.5;}
-.modal-sep{height:1px;background:linear-gradient(to right,transparent,var(--rose-pale),transparent);margin:16px 0}
-.modal-desc{font-size:13px;color:var(--text-soft);line-height:1.78;margin-bottom:16px}
-.modal-benefits-title{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:10px;}
-.modal-benefits{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-.modal-benefits li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text-soft);line-height:1.5;}
-.modal-benefits li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--rose);flex-shrink:0;margin-top:7px;}
-.modal-price-block{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--rose-pale),var(--beige));border-radius:12px;padding:14px 18px;}
-.modal-price-label{font-size:10px;color:var(--text-soft);text-transform:uppercase;letter-spacing:.08em}
-.modal-price-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--rose-deep);}
+.modal-photo .modal-ph{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.modal-photo .modal-ph span:first-child{font-size:40px;opacity:.5}
+.modal-photo .modal-ph span:last-child{font-size:8px;color:var(--text-soft);opacity:.6;letter-spacing:.1em;text-transform:uppercase}
+.modal-close{position:absolute;top:10px;right:10px;width:26px;height:26px;background:rgba(255,255,255,.92);border:none;border-radius:50%;cursor:pointer;font-size:12px;color:var(--text-soft);display:flex;align-items:center;justify-content:center;}
+.modal-body{padding:14px 16px 18px}
+.modal-badge{display:inline-block;font-size:7px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-deep);background:var(--rose-pale);border-radius:20px;padding:3px 9px;margin-bottom:8px;}
+.modal-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.15;}
+.modal-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10px;color:var(--text-soft);margin-bottom:10px;line-height:1.5;}
+.modal-sep{height:1px;background:linear-gradient(to right,transparent,var(--rose-pale),transparent);margin:10px 0}
+.modal-desc{font-size:9px;color:var(--text-soft);line-height:1.7;margin-bottom:10px}
+.modal-benefits-title{font-size:7px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:7px;}
+.modal-benefits{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.modal-benefits li{display:flex;align-items:flex-start;gap:7px;font-size:9px;color:var(--text-soft);line-height:1.4;}
+.modal-benefits li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0;margin-top:5px;}
+.modal-price-block{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--rose-pale),var(--beige));border-radius:9px;padding:10px 13px;}
+.modal-price-label{font-size:7px;color:var(--text-soft);text-transform:uppercase;letter-spacing:.06em}
+.modal-price-val{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--rose-deep);}
 
-/* ══ FOOTER ══ */
-.page-footer{background:var(--noir);text-align:center;padding:36px 20px;}
-.page-footer p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(255,255,255,.4);line-height:1.8;}
-.page-footer p strong{color:var(--rose);font-style:normal}
-.footer-link{display:inline-block;margin-top:16px;background:linear-gradient(135deg,var(--rose-deep),#d98a8a);color:var(--white);border-radius:40px;padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 20px rgba(201,122,122,.3);}
-.footer-link:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,122,122,.4)}
+/* FOOTER */
+.site-footer{background:var(--noir);text-align:center;padding:24px 14px;}
+.site-footer p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10px;color:rgba(255,255,255,.4);line-height:1.8;}
+.site-footer p strong{color:var(--rose);font-style:normal}
+.footer-link{display:inline-block;margin-top:12px;background:linear-gradient(135deg,var(--rose-deep),#d98a8a);color:var(--white);border-radius:40px;padding:8px 20px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;text-decoration:none;}
 
-/* ══ POP-UP ══ */
-.popup-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:0 16px 28px;pointer-events:none;}
-.popup-card{background:var(--noir);border-radius:20px;padding:18px 20px 18px 22px;max-width:420px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 20px 60px rgba(20,10,10,.35);position:relative;overflow:hidden;pointer-events:auto;transform:translateY(120px);opacity:0;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s ease;}
-.popup-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,var(--rose-deep),var(--rose),var(--beige-mid));}
+/* POP-UP */
+.popup-overlay{position:absolute;bottom:0;left:0;right:0;z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:0 10px 16px;pointer-events:none;}
+.popup-card{background:var(--noir);border-radius:14px;padding:12px 14px 12px 16px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 12px 40px rgba(20,10,10,.4);position:relative;overflow:hidden;pointer-events:auto;transform:translateY(100px);opacity:0;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s ease;}
+.popup-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--rose-deep),var(--rose),var(--beige-mid));}
 .popup-card.show{transform:translateY(0);opacity:1}
-.popup-left{display:flex;flex-direction:column;gap:3px;flex:1}
-.popup-tag{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);margin-bottom:2px;}
-.popup-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--white);line-height:1.2;}
+.popup-left{display:flex;flex-direction:column;gap:2px;flex:1}
+.popup-tag{font-size:7px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);}
+.popup-title{font-family:'Playfair Display',serif;font-size:11px;font-weight:700;color:var(--white);line-height:1.2;}
 .popup-title em{font-style:italic;font-weight:400;color:var(--rose)}
-.popup-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;}
-.popup-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.popup-btn{background:linear-gradient(135deg,var(--rose-deep),#d98a8a);color:var(--white);border:none;border-radius:40px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(201,122,122,.35);}
-.popup-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(201,122,122,.45)}
-.popup-close{background:rgba(255,255,255,.08);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;color:rgba(255,255,255,.4);font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;flex-shrink:0;}
-.popup-close:hover{background:rgba(255,255,255,.15);color:var(--white)}
+.popup-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.popup-btn{background:linear-gradient(135deg,var(--rose-deep),#d98a8a);color:var(--white);border:none;border-radius:40px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
+.popup-close{background:rgba(255,255,255,.08);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:rgba(255,255,255,.4);font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .anim{animation:fadeUp .5s ease both}
 
-@media(max-width:500px){
-  .lookbook-grid{grid-template-columns:1fr 1fr;gap:12px}
-  .look-info{padding:12px 14px 14px}
-  .look-name{font-size:14px}
-  .look-tagline{font-size:12px}
-  .modal-body{padding:18px 18px 22px}
-  .popup-sub{display:none}
-  .menu-grid{grid-template-columns:1fr}
-}
-@media(max-width:340px){
-  .lookbook-grid{grid-template-columns:1fr}
-}
+/* PAGE FOOTER */
+.page-footer{margin-top:24px;text-align:center;}
+.page-footer p{font-size:11px;color:rgba(255,255,255,0.3);font-family:'Cormorant Garamond',serif;font-style:italic;}
+.scroll-hint{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:12px;opacity:.5;}
+.scroll-hint span{font-size:10px;color:rgba(255,255,255,0.5);}
+.scroll-arrow{font-size:16px;animation:bounce 1.5s ease infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 </style>
 </head>
 <body>
 
-<!-- ══ HERO ══ -->
-<div class="hero">
-  <div class="hero-ring"></div>
-  <div class="hero-ring"></div>
-  <a class="back-link" href="https://renaitre-ensemble.vercel.app/index.html">Retour à l'inscription</a>
-  <div class="hero-tag">Disponible le jour J · 19 Décembre 2026</div>
+<!-- HEADER PAGE -->
+<div class="page-header">
+  <span class="ph-tag">Disponible le jour J · 19 Décembre 2026</span>
   <h1>Ce qui t'attend<em>sur place ♡</em></h1>
-  <p class="hero-sub">Prépare ton budget et viens l'esprit léger — tout sera là pour toi.</p>
-  <div class="hero-note">
-    <span>💡 Les prix sont <strong>indicatifs</strong> — aucun achat en ligne</span>
-  </div>
+  <p class="ph-sub">Prépare ton budget et viens l'esprit léger</p>
 </div>
 
-<!-- ══ INTRO ══ -->
-<div class="intro">
-  <h2>La journée, c'est aussi ça ♡</h2>
-  <p>En plus des activités bien-être, tu trouveras sur place une sélection de produits et saveurs
-  pour chouchouter ton corps, faire plaisir à tes enfants, et repartir avec de beaux souvenirs.
-  Tout est pensé pour être accessible à toutes les bourses.</p>
+<!-- IPHONE -->
+<div class="iphone-wrap">
+
+  <!-- Dynamic Island -->
+  <div class="dynamic-island">
+    <div class="di-cam"></div>
+    <div class="di-text">
+      <span>Renaître Ensemble</span>
+      <span>Catalogue · Jour J ♡</span>
+    </div>
+    <div class="di-dot"></div>
+  </div>
+
+  <!-- Boutons physiques -->
+  <div class="iphone-btn-left" style="top:110px;width:3px;height:36px;"></div>
+  <div class="iphone-btn-left" style="top:155px;width:3px;height:36px;"></div>
+  <div class="iphone-btn-right" style="top:130px;width:3px;height:52px;"></div>
+
+  <!-- Écran scrollable -->
+  <div class="iphone-screen">
+    <div class="iphone-screen-inner" id="screenInner">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <a class="back-link" href="https://renaitre-ensemble.vercel.app/index.html">Retour à l'inscription</a>
+        <div class="hero-tag">Disponible le jour J · 19 Décembre 2026</div>
+        <h1>Ce qui t'attend<em>sur place ♡</em></h1>
+        <p class="hero-sub">Prépare ton budget et viens l'esprit léger — tout sera là pour toi.</p>
+        <div class="hero-note">
+          <span>💡 Les prix sont <strong>indicatifs</strong> — aucun achat en ligne</span>
+        </div>
+      </div>
+
+      <!-- INTRO -->
+      <div class="intro">
+        <h2>La journée, c'est aussi ça ♡</h2>
+        <p>En plus des activités bien-être, tu trouveras sur place une sélection de produits et saveurs pour chouchouter ton corps, faire plaisir à tes enfants, et repartir avec de beaux souvenirs.</p>
+      </div>
+
+      <!-- NAV -->
+      <div class="cat-nav">
+        <button class="cat-btn active" onclick="showCat('all',this)">Tout voir</button>
+        <button class="cat-btn" onclick="showCat('menu-boissons',this)">🍵 Boissons</button>
+        <button class="cat-btn" onclick="showCat('food',this)">🥗 Food</button>
+        <button class="cat-btn" onclick="showCat('beaute',this)">✨ Beauté</button>
+        <button class="cat-btn" onclick="showCat('lifestyle',this)">🎁 Goodies</button>
+      </div>
+
+      <!-- SECTIONS -->
+      <div id="sections-container">
+
+        <!-- MENU BOISSONS -->
+        <div class="menu-boissons" data-cat="menu-boissons">
+          <div class="menu-header">
+            <span class="cat-emoji">🍵</span>
+            <div>
+              <div class="cat-section-title">Menu Boissons</div>
+              <div class="cat-section-sub">Matchas, détox, boissons locales ♡</div>
+            </div>
+          </div>
+          <div class="menu-sous-cat">
+            <div class="menu-sous-titre">🍵 Nos Matchas</div>
+            <div class="menu-grid" id="grid-matchas"></div>
+          </div>
+          <div class="menu-sous-cat">
+            <div class="menu-sous-titre">🥒 Boissons Détox</div>
+            <div class="menu-grid" id="grid-detox"></div>
+          </div>
+          <div class="menu-sous-cat">
+            <div class="menu-sous-titre">🌺 Boissons Locales</div>
+            <div class="menu-grid" id="grid-locales"></div>
+          </div>
+        </div>
+
+        <!-- FOOD -->
+        <div class="cat-section" data-cat="food">
+          <div class="cat-section-header">
+            <span class="cat-emoji">🥗</span>
+            <div>
+              <div class="cat-section-title">Food & Snacks</div>
+              <div class="cat-section-sub">Se faire plaisir, c'est prendre soin de soi</div>
+            </div>
+          </div>
+          <div class="lookbook-grid" id="grid-food"></div>
+        </div>
+
+        <!-- BEAUTÉ -->
+        <div class="cat-section" data-cat="beaute">
+          <div class="cat-section-header">
+            <span class="cat-emoji">✨</span>
+            <div>
+              <div class="cat-section-title">Beauté & Soins</div>
+              <div class="cat-section-sub">Pour briller de l'intérieur comme de l'extérieur</div>
+            </div>
+          </div>
+          <div class="lookbook-grid" id="grid-beaute"></div>
+        </div>
+
+        <!-- GOODIES -->
+        <div class="cat-section" data-cat="lifestyle">
+          <div class="cat-section-header">
+            <span class="cat-emoji">🎁</span>
+            <div>
+              <div class="cat-section-title">Goodies & Lifestyle</div>
+              <div class="cat-section-sub">Emporte un souvenir de cette journée unique</div>
+            </div>
+          </div>
+          <div class="lookbook-grid" id="grid-lifestyle"></div>
+        </div>
+
+      </div>
+
+      <!-- FOOTER SITE -->
+      <div class="site-footer">
+        <p>Tout est disponible sur place le <strong>19 Décembre 2026</strong>.<br/>Aucun achat en ligne — viens simplement prête à te faire du bien ♡</p>
+        <a class="footer-link" href="https://renaitre-ensemble.vercel.app/index.html">← Réserver ma place</a>
+      </div>
+
+      <!-- POP-UP -->
+      <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-card" id="popupCard">
+          <div class="popup-left">
+            <span class="popup-tag">Tu as vu ce qui t'attend ?</span>
+            <span class="popup-title">Maintenant réserve<em> ta place ♡</em></span>
+          </div>
+          <div class="popup-right">
+            <a class="popup-btn" href="https://renaitre-ensemble.vercel.app/index.html">Je m'inscris →</a>
+            <button class="popup-close" onclick="closePopup()">✕</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-photo" id="modalPhoto"></div>
+      <div class="modal-body">
+        <span class="modal-badge" id="modalBadge"></span>
+        <h2 class="modal-name" id="modalName"></h2>
+        <p class="modal-tagline" id="modalTagline"></p>
+        <div class="modal-sep"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <p class="modal-benefits-title">Bienfaits &amp; infos</p>
+        <ul class="modal-benefits" id="modalBenefits"></ul>
+        <div class="modal-price-block">
+          <span class="modal-price-label">Prix indicatif sur place</span>
+          <span class="modal-price-val" id="modalPrice"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- ══ NAV CATÉGORIES ══ -->
-<div class="cat-nav">
-  <button class="cat-btn active" onclick="showCat('all',this)">Tout voir</button>
-  <button class="cat-btn" onclick="showCat('menu-boissons',this)">🍵 Menu Boissons</button>
-  <button class="cat-btn" onclick="showCat('food',this)">🥗 Food</button>
-  <button class="cat-btn" onclick="showCat('beaute',this)">✨ Beauté</button>
-  <button class="cat-btn" onclick="showCat('lifestyle',this)">🎁 Goodies</button>
+<!-- SCROLL HINT -->
+<div class="scroll-hint">
+  <span>Fais glisser vers le bas dans le téléphone</span>
+  <span class="scroll-arrow">↓</span>
 </div>
 
-<!-- ══ SECTIONS ══ -->
-<div id="sections-container">
-
-  <!-- ══ MENU BOISSONS ══ -->
-  <div class="menu-boissons" data-cat="menu-boissons">
-    <div class="menu-header">
-      <span class="cat-emoji">🍵</span>
-      <div>
-        <div class="cat-section-title">Menu Boissons</div>
-        <div class="cat-section-sub">Matchas, détox, boissons locales — faites votre choix ♡</div>
-      </div>
-    </div>
-
-    <!-- Matchas -->
-    <div class="menu-sous-cat">
-      <div class="menu-sous-titre">🍵 Nos Matchas</div>
-      <div class="menu-grid" id="grid-matchas"></div>
-    </div>
-
-    <!-- Détox -->
-    <div class="menu-sous-cat">
-      <div class="menu-sous-titre">🥒 Boissons Détox</div>
-      <div class="menu-grid" id="grid-detox"></div>
-    </div>
-
-    <!-- Boissons locales -->
-    <div class="menu-sous-cat">
-      <div class="menu-sous-titre">🌺 Boissons Locales</div>
-      <div class="menu-grid" id="grid-locales"></div>
-    </div>
-
-  </div>
-
-  <!-- FOOD -->
-  <div class="cat-section" data-cat="food">
-    <div class="cat-section-header">
-      <span class="cat-emoji">🥗</span>
-      <div>
-        <div class="cat-section-title">Food & Snacks</div>
-        <div class="cat-section-sub">Se faire plaisir, c'est aussi prendre soin de soi</div>
-      </div>
-    </div>
-    <div class="lookbook-grid" id="grid-food"></div>
-  </div>
-
-  <!-- BEAUTÉ -->
-  <div class="cat-section" data-cat="beaute">
-    <div class="cat-section-header">
-      <span class="cat-emoji">✨</span>
-      <div>
-        <div class="cat-section-title">Beauté & Soins</div>
-        <div class="cat-section-sub">Pour briller de l'intérieur comme de l'extérieur</div>
-      </div>
-    </div>
-    <div class="lookbook-grid" id="grid-beaute"></div>
-  </div>
-
-  <!-- GOODIES -->
-  <div class="cat-section" data-cat="lifestyle">
-    <div class="cat-section-header">
-      <span class="cat-emoji">🎁</span>
-      <div>
-        <div class="cat-section-title">Goodies & Lifestyle</div>
-        <div class="cat-section-sub">Emporte un souvenir de cette journée unique</div>
-      </div>
-    </div>
-    <div class="lookbook-grid" id="grid-lifestyle"></div>
-  </div>
-
-</div>
-
-<!-- ══ FOOTER ══ -->
+<!-- PAGE FOOTER -->
 <div class="page-footer">
-  <p>
-    Tout est disponible sur place le <strong>19 Décembre 2026</strong>.<br/>
-    Aucun achat en ligne — viens simplement prête à te faire du bien ♡
-  </p>
-  <a class="footer-link" href="https://renaitre-ensemble.vercel.app/index.html">← Réserver ma place</a>
-</div>
-
-<!-- ══ MODAL PRODUIT ══ -->
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-  <div class="modal">
-    <div class="modal-photo" id="modalPhoto"></div>
-    <div class="modal-body">
-      <span class="modal-badge" id="modalBadge"></span>
-      <h2 class="modal-name" id="modalName"></h2>
-      <p class="modal-tagline" id="modalTagline"></p>
-      <div class="modal-sep"></div>
-      <p class="modal-desc" id="modalDesc"></p>
-      <p class="modal-benefits-title">Bienfaits &amp; infos</p>
-      <ul class="modal-benefits" id="modalBenefits"></ul>
-      <div class="modal-price-block">
-        <span class="modal-price-label">Prix indicatif sur place</span>
-        <span class="modal-price-val" id="modalPrice"></span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ POP-UP ══ -->
-<div class="popup-overlay" id="popupOverlay">
-  <div class="popup-card" id="popupCard">
-    <div class="popup-left">
-      <span class="popup-tag">Tu as vu ce qui t'attend ?</span>
-      <span class="popup-title">Maintenant réserve<em> ta place ♡</em></span>
-      <span class="popup-sub">Places limitées — inscris-toi avant qu'il soit trop tard !</span>
-    </div>
-    <div class="popup-right">
-      <a class="popup-btn" href="https://renaitre-ensemble.vercel.app/index.html">Je m'inscris →</a>
-      <button class="popup-close" onclick="closePopup()">✕</button>
-    </div>
-  </div>
+  <p>renaitre-ensemble.vercel.app</p>
 </div>
 
 <script>
-// ══ DONNÉES BOISSONS ══
 const boissons = {
   matchas: [
     { nom:'Matcha Citronnade', desc:'Matcha frais & citron pressé sur glace', prix:'2 000 FCFA', photo:'Matcha-citronnade.jpeg', emoji:'🍋' },
@@ -327,7 +434,7 @@ const boissons = {
     { nom:'Matcha Nature', desc:'Matcha pur cérémonial servi chaud ou froid', prix:'1 500 FCFA', photo:'Matcha nature.JPG', emoji:'🍵' },
   ],
   detox: [
-    { nom:'Jus Détox Vert', desc:'Concombre, céléri, persil,  citron & gingembre', prix:'1 500 FCFA', photo:'Jus detox.JPG', emoji:'🥒' },
+    { nom:'Jus Détox Vert', desc:'Concombre, céléri, persil, citron & gingembre', prix:'1 500 FCFA', photo:'Jus detox.JPG', emoji:'🥒' },
     { nom:'Eau Infusée Rose', desc:'Rose, framboises, menthe & citron — zéro sucre', prix:'1 000 FCFA', photo:null, emoji:'💧' },
     { nom:'Shot Gingembre', desc:'Gingembre, citron & curcuma — boost immunitaire', prix:'500 FCFA', photo:'Shot de gingembre.JPG', emoji:'⚡' },
     { nom:'Jus d\'ananas', desc:'Ananas, citron & gingembre', prix:'1 500 FCFA', photo:"Jus d'ananas.JPG", emoji:'🍍' },
@@ -338,51 +445,45 @@ const boissons = {
   ],
 };
 
-// ══ DONNÉES CATALOGUE ══
 const items = {
   food: [
-    { nom:'Crêpes Bien-Être', tagline:'Le plaisir sans se priver — ça existe vraiment.', desc:'Crêpes légères à la farine complète, garnies de fruits frais de saison et d\'un filet de miel naturel. Préparées sur place, chaudes et dorées.', bienfaits:['Farine complète = index glycémique bas','Fruits frais pour les vitamines et fibres','Miel naturel antibactérien et énergisant','Sans conservateurs ni additifs'], prix:'1 500 FCFA', photo:null, emoji:'🥞' },
-    { nom:'Miniardises Détox', tagline:'Grignoter sans trahir tes bonnes résolutions.', desc:'Bouchées de crudités croquantes, sauce houmous maison et mélange de graines. Le snacking version bien-être — idéal après le pilates.', bienfaits:['Protéines végétales rassasiantes','Fibres pour une bonne digestion','Zéro culpabilité, 100% saveur','Parfait après une activité physique'], prix:'2 000 FCFA', photo:null, emoji:'🥗' },
-    { nom:'Snacks & Friandises', tagline:'Pour les petits creux qui ne préviennent pas.', desc:'Assortiment de snacks et friandises importées pour petits et grands — Mars, Snickers, bonbons, fruits secs. Énergie rapide entre deux activités.', bienfaits:['Énergie rapide entre les activités','Noix riches en bons acides gras','Variété de saveurs pour tous les goûts','Parfait pour les enfants'], prix:'À partir de 200 FCFA', photo:null, emoji:'🍫' },
+    { nom:'Crêpes Bien-Être', tagline:'Le plaisir sans se priver — ça existe vraiment.', desc:'Crêpes légères à la farine complète, garnies de fruits frais de saison et d\'un filet de miel naturel.', bienfaits:['Farine complète = index glycémique bas','Fruits frais pour les vitamines et fibres','Miel naturel antibactérien et énergisant','Sans conservateurs ni additifs'], prix:'1 500 FCFA', photo:null, emoji:'🥞' },
+    { nom:'Miniardises Détox', tagline:'Grignoter sans trahir tes bonnes résolutions.', desc:'Bouchées de crudités croquantes, sauce houmous maison et mélange de graines.', bienfaits:['Protéines végétales rassasiantes','Fibres pour une bonne digestion','Zéro culpabilité, 100% saveur','Parfait après une activité physique'], prix:'2 000 FCFA', photo:null, emoji:'🥗' },
+    { nom:'Snacks & Friandises', tagline:'Pour les petits creux qui ne préviennent pas.', desc:'Assortiment de snacks et friandises importées pour petits et grands.', bienfaits:['Énergie rapide entre les activités','Noix riches en bons acides gras','Variété de saveurs pour tous les goûts','Parfait pour les enfants'], prix:'À partir de 200 FCFA', photo:null, emoji:'🍫' },
   ],
   beaute: [
-    { nom:'Soins Visage', tagline:'Le rituel beauté accessible à toutes.', desc:'Sélection de soins adaptés à toutes les carnations — sérum, crème, masque. Disponibles à l\'achat sur place pour (re)découvrir ta routine.', bienfaits:['Formules testées dermatologiquement','Adaptées aux peaux noires et métissées','Hydratation longue durée','Prix accessibles pour toutes'], prix:'À partir de 3 000 FCFA', photo:null, emoji:'✨' },
-    { nom:'Parfums & Huiles', tagline:'Sentir bon, c\'est aussi prendre soin de soi.', desc:'Sélection de parfums et huiles parfumées importés, testables sur place. Des fragrances choisies pour leur qualité et leur rapport qualité-prix.', bienfaits:['Fragrances longue tenue','Fleuries, boisées et orientales au choix','Huiles parfumées naturelles disponibles','Idéales comme cadeaux pour soi ou autrui'], prix:'À partir de 5 000 FCFA', photo:null, emoji:'🌸' },
+    { nom:'Soins Visage', tagline:'Le rituel beauté accessible à toutes.', desc:'Sélection de soins adaptés à toutes les carnations — sérum, crème, masque.', bienfaits:['Formules testées dermatologiquement','Adaptées aux peaux noires et métissées','Hydratation longue durée','Prix accessibles pour toutes'], prix:'À partir de 3 000 FCFA', photo:null, emoji:'✨' },
+    { nom:'Parfums & Huiles', tagline:'Sentir bon, c\'est aussi prendre soin de soi.', desc:'Sélection de parfums et huiles parfumées importés, testables sur place.', bienfaits:['Fragrances longue tenue','Fleuries, boisées et orientales au choix','Huiles parfumées naturelles disponibles','Idéales comme cadeaux'], prix:'À partir de 5 000 FCFA', photo:null, emoji:'🌸' },
   ],
   lifestyle: [
-    { nom:'Kit Goodies Renaître', tagline:'Emporte un souvenir de cette journée unique.', desc:'Le kit souvenir officiel de l\'événement — tote bag en coton aux couleurs de Renaître Ensemble, carnet pour tes intentions, stylo et surprises. Édition limitée.', bienfaits:['Tote bag en coton réutilisable','Carnet pour tes intentions et affirmations','Édition limitée — quantités restreintes','Souvenir exclusif de l\'événement'], prix:'5 000 FCFA', photo:null, emoji:'🎁' },
-    { nom:'Shopping Lifestyle', tagline:'Découvre, teste, et repartir les mains pleines.', desc:'Un espace shopping avec des produits beauté, lifestyle et bien-être sélectionnés par les partenaires de l\'événement. Bonnes affaires garanties !', bienfaits:['Produits sélectionnés par nos partenaires','Prix spéciaux événement','Découverte de nouvelles marques locales','Shopping dans une ambiance bien-être'], prix:'Selon produit', photo:null, emoji:'🛍️' },
+    { nom:'Kit Goodies Renaître', tagline:'Emporte un souvenir de cette journée unique.', desc:'Le kit souvenir officiel — tote bag, carnet pour tes intentions, stylo et surprises. Édition limitée.', bienfaits:['Tote bag en coton réutilisable','Carnet pour tes intentions et affirmations','Édition limitée — quantités restreintes','Souvenir exclusif de l\'événement'], prix:'5 000 FCFA', photo:null, emoji:'🎁' },
+    { nom:'Shopping Lifestyle', tagline:'Découvre, teste, et repartir les mains pleines.', desc:'Un espace shopping avec des produits beauté, lifestyle et bien-être sélectionnés par les partenaires.', bienfaits:['Produits sélectionnés par nos partenaires','Prix spéciaux événement','Découverte de nouvelles marques locales','Shopping dans une ambiance bien-être'], prix:'Selon produit', photo:null, emoji:'🛍️' },
   ],
 };
 
 const catLabels = {food:'Food',beaute:'Beauté',lifestyle:'Goodies'};
 
-// ── Render menu boissons
 function renderMenuBoissons() {
   Object.entries(boissons).forEach(([sous, list]) => {
     const grid = document.getElementById('grid-' + sous);
     if (!grid) return;
     grid.innerHTML = '';
     list.forEach((item, i) => {
-      const photoHTML = item.photo
-        ? `<img src="${item.photo}" alt="${item.nom}" loading="lazy"/>`
-        : item.emoji;
-      grid.innerHTML += `
-        <div class="menu-item anim" style="animation-delay:${i*0.06}s">
-          <div class="menu-item-left">
-            <div class="menu-item-photo">${photoHTML}</div>
-            <div class="menu-item-info">
-              <div class="menu-item-nom">${item.nom}</div>
-              <div class="menu-item-desc">${item.desc}</div>
-            </div>
+      const photoHTML = item.photo ? `<img src="${item.photo}" alt="${item.nom}" loading="lazy"/>` : item.emoji;
+      grid.innerHTML += `<div class="menu-item anim" style="animation-delay:${i*0.06}s">
+        <div class="menu-item-left">
+          <div class="menu-item-photo">${photoHTML}</div>
+          <div class="menu-item-info">
+            <div class="menu-item-nom">${item.nom}</div>
+            <div class="menu-item-desc">${item.desc}</div>
           </div>
-          <div class="menu-item-prix">${item.prix}</div>
-        </div>`;
+        </div>
+        <div class="menu-item-prix">${item.prix}</div>
+      </div>`;
     });
   });
 }
 
-// ── Render catalogue
 function renderAll() {
   Object.entries(items).forEach(([cat, list]) => {
     const grid = document.getElementById('grid-' + cat);
@@ -395,15 +496,14 @@ function renderAll() {
       card.onclick = () => openModal(item, catLabels[cat]);
       const photoHTML = item.photo
         ? `<img src="${item.photo}" alt="${item.nom}" loading="lazy"/>`
-        : `<div class="look-placeholder"><div class="ph-top"><span class="ph-tag">${catLabels[cat]}</span><span class="ph-add">+ ta photo</span></div><span class="ph-emoji">${item.emoji}</span></div>`;
-      card.innerHTML = `
-        <div class="look-photo">${photoHTML}</div>
+        : `<div class="look-placeholder"><div class="ph-top"><span class="ph-tag">${catLabels[cat]}</span></div><span class="ph-emoji">${item.emoji}</span></div>`;
+      card.innerHTML = `<div class="look-photo">${photoHTML}</div>
         <div class="look-info">
           <div class="look-name">${item.nom}</div>
           <div class="look-tagline">${item.tagline}</div>
           <div class="look-footer">
             <span class="look-price">${item.prix}</span>
-            <span class="look-detail">En savoir plus</span>
+            <span class="look-detail">Voir</span>
           </div>
         </div>`;
       grid.appendChild(card);
@@ -411,28 +511,16 @@ function renderAll() {
   });
 }
 
-// ── Filtre catégories
 function showCat(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
-  // Gérer menu boissons (élément spécial)
   const menuBois = document.querySelector('.menu-boissons');
-  if (cat === 'all') {
-    menuBois.classList.remove('hidden');
-  } else if (cat === 'menu-boissons') {
-    menuBois.classList.remove('hidden');
-  } else {
-    menuBois.classList.add('hidden');
-  }
-
-  // Gérer les autres sections
+  menuBois.classList.toggle('hidden', cat !== 'all' && cat !== 'menu-boissons');
   document.querySelectorAll('.cat-section').forEach(s => {
     s.classList.toggle('hidden', cat !== 'all' && s.dataset.cat !== cat);
   });
 }
 
-// ── Modal
 function openModal(item, catLabel) {
   const ph = document.getElementById('modalPhoto');
   ph.innerHTML = item.photo
@@ -447,25 +535,16 @@ function openModal(item, catLabel) {
   ul.innerHTML = '';
   item.bienfaits.forEach(b => { const li = document.createElement('li'); li.textContent = b; ul.appendChild(li); });
   document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// ── Pop-up
 function closePopup() {
   const card = document.getElementById('popupCard');
   card.style.transition = 'transform .3s ease, opacity .3s ease';
-  card.style.transform = 'translateY(120px)';
+  card.style.transform = 'translateY(100px)';
   card.style.opacity = '0';
   setTimeout(() => { document.getElementById('popupOverlay').style.display = 'none'; }, 350);
 }
@@ -475,7 +554,6 @@ setTimeout(() => {
   setTimeout(() => closePopup(), 10000);
 }, 5000);
 
-// ── Init
 renderMenuBoissons();
 renderAll();
 </script>
